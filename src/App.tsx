@@ -162,7 +162,7 @@ function App() {
           </button>
         } />
         <footer className="text-center py-6 text-xs text-anthro-muted">
-          © {new Date().getFullYear()} Alice Yu (JIATIAN YU). All rights reserved.
+          © {new Date().getFullYear()} Alice Yu (Jiatian Yu). All rights reserved.
         </footer>
       </div>
     </LangContext.Provider>
