@@ -20,6 +20,7 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
   const [subscriptions, setSubscriptions] = useLocalStorage('kakeibo-subscriptions', initialSubscriptions);
   const [monthlyRecords, setMonthlyRecords] = useLocalStorage('kakeibo-monthly', initialMonthlyRecords);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showGuide, setShowGuide] = useState(false);
 
   const tabLabels: Record<Tab, string> = {
     dashboard: t.tabs.dashboard,
@@ -100,6 +101,12 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
                 className="hidden"
               />
               {langToggle}
+              <button
+                onClick={() => setShowGuide(true)}
+                className="w-7 h-7 rounded-full border border-anthro-sand/30 text-anthro-sand/60 hover:text-white hover:border-white hover:bg-white/10 transition-all text-xs font-bold flex items-center justify-center"
+              >
+                ?
+              </button>
             </div>
           </div>
         </div>
@@ -115,6 +122,27 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
           <AssetChart records={monthlyRecords} onUpdate={setMonthlyRecords} />
         )}
       </main>
+
+      {showGuide && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" onClick={() => setShowGuide(false)}>
+          <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-lg font-bold text-anthro-dark">{t.guide.title}</h2>
+              <button onClick={() => setShowGuide(false)} className="text-anthro-muted hover:text-anthro-dark text-sm">
+                {t.guide.close}
+              </button>
+            </div>
+            <div className="space-y-4">
+              {t.guide.sections.map((section) => (
+                <div key={section.heading}>
+                  <h3 className="text-sm font-semibold text-anthro-brown mb-1">{section.heading}</h3>
+                  <p className="text-sm text-anthro-muted leading-relaxed">{section.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

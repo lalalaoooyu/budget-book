@@ -50,6 +50,36 @@ const translations = {
       confirmDelete: 'この記録を削除しますか？',
     },
     categories: { assets: '資産', liabilities: '負債', income: '収益', expenses: '費用' },
+    guide: {
+      title: '使い方ガイド',
+      close: '閉じる',
+      sections: [
+        {
+          heading: '総覧',
+          body: '資産・負債・収益・費用の合計と純資産・当月収支を一覧で確認できます。費用の内訳もグラフで表示されます。',
+        },
+        {
+          heading: '収支管理',
+          body: '項目の追加・編集・削除ができます。上部のフィルターで分類別に絞り込めます。',
+        },
+        {
+          heading: 'サブスク管理',
+          body: '月額サブスクリプションを一覧管理できます。合計金額が自動計算されます。',
+        },
+        {
+          heading: '資産推移',
+          body: '月ごとの資産をチャートで追跡できます。新しい月を追加したり、不要な月を削除できます。',
+        },
+        {
+          heading: 'データの保存',
+          body: 'すべてのデータはブラウザの localStorage に自動保存されます。ページを更新・閉じてもデータは消えません。ただし、ブラウザのキャッシュを削除すると失われます。',
+        },
+        {
+          heading: 'バックアップ（導出 / 導入）',
+          body: '「導出」ボタンで全データを JSON ファイルとしてダウンロードできます。「導入」ボタンで以前のバックアップファイルを選択すると、データが復元されます。定期的なバックアップをおすすめします。',
+        },
+      ],
+    },
   },
   en: {
     appTitle: 'Budget Book',
@@ -100,6 +130,36 @@ const translations = {
       confirmDelete: 'Delete this record?',
     },
     categories: { assets: 'Assets', liabilities: 'Liabilities', income: 'Income', expenses: 'Expenses' },
+    guide: {
+      title: 'User Guide',
+      close: 'Close',
+      sections: [
+        {
+          heading: 'Overview',
+          body: 'View totals for assets, liabilities, income, expenses, net assets and monthly balance at a glance. Expense breakdown is shown as a bar chart.',
+        },
+        {
+          heading: 'Transactions',
+          body: 'Add, edit, or delete entries. Use the filter buttons to view by category.',
+        },
+        {
+          heading: 'Subscriptions',
+          body: 'Manage your monthly subscriptions in one place. The total is calculated automatically.',
+        },
+        {
+          heading: 'Asset History',
+          body: 'Track your assets over time with an interactive chart. You can add new months or remove existing ones.',
+        },
+        {
+          heading: 'Data Storage',
+          body: 'All data is automatically saved in your browser\'s localStorage. Your data persists across page refreshes and browser restarts. However, clearing browser cache/site data will erase it.',
+        },
+        {
+          heading: 'Backup (Export / Import)',
+          body: 'Click "Export" to download all data as a JSON file. Click "Import" to restore from a previous backup file. Regular backups are recommended.',
+        },
+      ],
+    },
   },
 } as const;
 
