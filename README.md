@@ -74,4 +74,4 @@ npm run dev
 
 ## License / ライセンス
 
-© 2026 Alice Yu (Jiatian Yu). All rights reserved.
+© 2026 Alice Yu (JIATIAN YU). All rights reserved.
