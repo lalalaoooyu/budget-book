@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-anthro-orange: #D97757;
+  --color-anthro-orange-light: #F0BBA8;
+  --color-anthro-cream: #FAF6F1;
+  --color-anthro-sand: #F0E9DF;
+  --color-anthro-dark: #1A1612;
+  --color-anthro-brown: #4A3728;
+  --color-anthro-muted: #8B7E74;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-anthro-cream);
+  font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+  color: var(--color-anthro-dark);
+}
