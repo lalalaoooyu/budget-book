@@ -31,12 +31,12 @@ export default function SubscriptionList({ subscriptions, onUpdate }: Props) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-anthro-dark">{t.subscriptions.title}</h2>
-        <div className="bg-anthro-orange/10 px-4 py-2 rounded-full">
-          <span className="text-sm text-anthro-muted">{t.subscriptions.total} </span>
-          <span className="font-bold text-anthro-orange">¥{total.toLocaleString()}{t.subscriptions.perMonth}</span>
+    <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-4 md:p-6">
+      <div className="flex items-center justify-between mb-4 md:mb-6 gap-2">
+        <h2 className="text-base md:text-lg font-bold text-anthro-dark">{t.subscriptions.title}</h2>
+        <div className="bg-anthro-orange/10 px-3 md:px-4 py-1.5 md:py-2 rounded-full">
+          <span className="text-xs md:text-sm text-anthro-muted">{t.subscriptions.total} </span>
+          <span className="text-sm md:text-base font-bold text-anthro-orange">¥{total.toLocaleString()}{t.subscriptions.perMonth}</span>
         </div>
       </div>
 
@@ -54,21 +54,21 @@ export default function SubscriptionList({ subscriptions, onUpdate }: Props) {
         ))}
       </div>
 
-      <div className="flex gap-3 items-center pt-4 border-t border-anthro-sand">
+      <div className="flex gap-2 md:gap-3 items-center pt-4 border-t border-anthro-sand flex-wrap">
         <input
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
-          className="border border-anthro-sand rounded-xl px-4 py-2.5 text-sm flex-1 focus:outline-anthro-orange"
+          className="border border-anthro-sand rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-xs md:text-sm flex-1 min-w-[100px] focus:outline-anthro-orange"
           placeholder={t.subscriptions.namePlaceholder}
         />
         <input
           type="number"
           value={newAmount}
           onChange={(e) => setNewAmount(e.target.value)}
-          className="border border-anthro-sand rounded-xl px-4 py-2.5 text-sm w-28 focus:outline-anthro-orange"
+          className="border border-anthro-sand rounded-xl px-3 md:px-4 py-2 md:py-2.5 text-xs md:text-sm w-24 md:w-28 focus:outline-anthro-orange"
           placeholder={t.subscriptions.amountPlaceholder}
         />
-        <button onClick={addSub} className="bg-anthro-orange text-white px-5 py-2.5 rounded-full text-sm hover:brightness-110 transition-all">
+        <button onClick={addSub} className="bg-anthro-orange text-white px-4 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm hover:brightness-110 transition-all">
           {t.subscriptions.add}
         </button>
       </div>

@@ -111,12 +111,12 @@ export default function AssetChart({ records, onUpdate }: Props) {
 
   return (
     <div>
-      <div className="bg-white rounded-2xl shadow-sm p-8 mb-6">
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-4 md:p-8 mb-4 md:mb-6">
         <Line data={chartData} options={options} />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-x-auto">
+        <table className="w-full text-xs md:text-sm min-w-[480px]">
           <thead className="bg-anthro-sand/50">
             <tr>
               <th className="text-left px-4 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.history.yearMonth}</th>

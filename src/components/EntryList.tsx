@@ -72,11 +72,11 @@ export default function EntryList({ entries, onUpdate }: Props) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex gap-2 flex-wrap">
+      <div className="flex items-center justify-between mb-4 md:mb-5 gap-2">
+        <div className="flex gap-1.5 md:gap-2 flex-wrap">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-1.5 rounded-full text-sm transition-all ${filter === 'all' ? 'bg-anthro-dark text-white' : 'bg-anthro-sand text-anthro-brown hover:bg-anthro-orange-light'}`}
+            className={`px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm transition-all ${filter === 'all' ? 'bg-anthro-dark text-white' : 'bg-anthro-sand text-anthro-brown hover:bg-anthro-orange-light'}`}
           >
             {t.entries.all}
           </button>
@@ -84,7 +84,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm transition-all ${filter === cat ? 'bg-anthro-dark text-white' : 'bg-anthro-sand text-anthro-brown hover:bg-anthro-orange-light'}`}
+              className={`px-3 md:px-4 py-1 md:py-1.5 rounded-full text-xs md:text-sm transition-all ${filter === cat ? 'bg-anthro-dark text-white' : 'bg-anthro-sand text-anthro-brown hover:bg-anthro-orange-light'}`}
             >
               {categoryLabels[cat]}
             </button>
@@ -92,14 +92,14 @@ export default function EntryList({ entries, onUpdate }: Props) {
         </div>
         <button
           onClick={() => setShowAdd(!showAdd)}
-          className="bg-anthro-orange text-white px-5 py-2 rounded-full text-sm hover:brightness-110 transition-all"
+          className="bg-anthro-orange text-white px-4 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm whitespace-nowrap hover:brightness-110 transition-all"
         >
           {t.entries.add}
         </button>
       </div>
 
       {showAdd && (
-        <div className="bg-white rounded-2xl shadow-sm p-5 mb-5 flex flex-wrap gap-4 items-end">
+        <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-4 md:p-5 mb-4 md:mb-5 flex flex-wrap gap-3 md:gap-4 items-end">
           <div>
             <label className="block text-xs text-anthro-muted mb-1.5">{t.entries.category}</label>
             <select
@@ -147,27 +147,27 @@ export default function EntryList({ entries, onUpdate }: Props) {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-xl md:rounded-2xl shadow-sm overflow-x-auto">
+        <table className="w-full text-xs md:text-sm min-w-[540px]">
           <thead className="bg-anthro-sand/50">
             <tr>
-              <th className="text-left px-5 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.category}</th>
-              <th className="text-left px-5 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.item}</th>
-              <th className="text-right px-5 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.amount}</th>
-              <th className="text-left px-5 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.note}</th>
-              <th className="px-5 py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase w-24">{t.entries.action}</th>
+              <th className="text-left px-3 md:px-5 py-2.5 md:py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.category}</th>
+              <th className="text-left px-3 md:px-5 py-2.5 md:py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.item}</th>
+              <th className="text-right px-3 md:px-5 py-2.5 md:py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.amount}</th>
+              <th className="text-left px-3 md:px-5 py-2.5 md:py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase">{t.entries.note}</th>
+              <th className="px-3 md:px-5 py-2.5 md:py-3.5 font-medium text-anthro-muted text-xs tracking-wide uppercase w-24">{t.entries.action}</th>
             </tr>
           </thead>
           <tbody>
             {filtered.map((entry) => (
               <tr key={entry.id} className="border-t border-anthro-sand/50 hover:bg-anthro-cream/50 transition-colors">
-                <td className="px-5 py-3.5">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5">
                   <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${categoryColors[entry.category]}`}>
                     {categoryLabels[entry.category]}
                   </span>
                 </td>
-                <td className="px-5 py-3.5 text-anthro-dark">{entry.name}</td>
-                <td className="px-5 py-3.5 text-right text-anthro-dark">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-dark">{entry.name}</td>
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-right text-anthro-dark">
                   {editingId === entry.id ? (
                     <input
                       type="number"
@@ -179,7 +179,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     `¥${entry.amount.toLocaleString()}`
                   )}
                 </td>
-                <td className="px-5 py-3.5 text-anthro-muted">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-muted">
                   {editingId === entry.id ? (
                     <input
                       value={editNote}
@@ -190,7 +190,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     entry.note
                   )}
                 </td>
-                <td className="px-5 py-3.5 text-center">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-center">
                   {editingId === entry.id ? (
                     <button onClick={() => saveEdit(entry.id)} className="text-anthro-orange text-xs font-medium hover:underline">
                       {t.entries.save}

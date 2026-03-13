@@ -62,34 +62,19 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
   return (
     <>
       <header className="bg-anthro-dark">
-        <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
-          <h1 className="text-lg font-semibold text-white tracking-wide">{t.appTitle}</h1>
-          <div className="flex items-center gap-4">
-            <nav className="flex gap-1">
-              {tabKeys.map((key) => (
-                <button
-                  key={key}
-                  onClick={() => setActiveTab(key)}
-                  className={`px-4 py-2 rounded-full text-sm transition-all ${
-                    activeTab === key
-                      ? 'bg-anthro-orange text-white'
-                      : 'text-anthro-sand/70 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  {tabLabels[key]}
-                </button>
-              ))}
-            </nav>
-            <div className="flex gap-1 border-l border-white/20 pl-4 ml-1">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-3 md:py-5">
+          <div className="flex items-center justify-between">
+            <h1 className="text-sm md:text-lg font-semibold text-white tracking-wide">{t.appTitle}</h1>
+            <div className="flex items-center gap-1">
               <button
                 onClick={exportData}
-                className="px-3 py-2 rounded-full text-xs text-anthro-sand/60 hover:text-white hover:bg-white/10 transition-all"
+                className="px-2 md:px-3 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs text-anthro-sand/60 hover:text-white hover:bg-white/10 transition-all"
               >
                 {t.export}
               </button>
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="px-3 py-2 rounded-full text-xs text-anthro-sand/60 hover:text-white hover:bg-white/10 transition-all"
+                className="px-2 md:px-3 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs text-anthro-sand/60 hover:text-white hover:bg-white/10 transition-all"
               >
                 {t.import}
               </button>
@@ -103,16 +88,31 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
               {langToggle}
               <button
                 onClick={() => setShowGuide(true)}
-                className="w-7 h-7 rounded-full border border-anthro-sand/30 text-anthro-sand/60 hover:text-white hover:border-white hover:bg-white/10 transition-all text-xs font-bold flex items-center justify-center"
+                className="w-6 h-6 md:w-7 md:h-7 rounded-full border border-anthro-sand/30 text-anthro-sand/60 hover:text-white hover:border-white hover:bg-white/10 transition-all text-[10px] md:text-xs font-bold flex items-center justify-center"
               >
                 ?
               </button>
             </div>
           </div>
+          <nav className="flex gap-1 mt-2 md:mt-3 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none">
+            {tabKeys.map((key) => (
+              <button
+                key={key}
+                onClick={() => setActiveTab(key)}
+                className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm whitespace-nowrap transition-all ${
+                  activeTab === key
+                    ? 'bg-anthro-orange text-white'
+                    : 'text-anthro-sand/70 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {tabLabels[key]}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-4xl mx-auto px-4 md:px-6 py-5 md:py-8">
         {activeTab === 'dashboard' && <Dashboard entries={entries} />}
         {activeTab === 'entries' && <EntryList entries={entries} onUpdate={setEntries} />}
         {activeTab === 'subscriptions' && (
@@ -161,8 +161,13 @@ function App() {
             {lang === 'ja' ? 'EN' : 'JA'}
           </button>
         } />
-        <footer className="text-center py-6 text-xs text-anthro-muted">
-          © {new Date().getFullYear()} Alice Yu (JIATIAN YU). All rights reserved.
+        <footer className="text-center py-6 text-xs text-anthro-muted space-y-2">
+          <div className="flex justify-center gap-4">
+            <a href="https://lalalaoooyu.github.io/alice-intro/" target="_blank" className="hover:text-anthro-orange transition-colors">Portfolio</a>
+            <a href="https://github.com/lalalaoooyu" target="_blank" className="hover:text-anthro-orange transition-colors">GitHub</a>
+            <a href="https://www.linkedin.com/in/jiatian-yu-7223b9232/" target="_blank" className="hover:text-anthro-orange transition-colors">LinkedIn</a>
+          </div>
+          <p>© {new Date().getFullYear()} Alice Yu (JIATIAN YU). All rights reserved.</p>
         </footer>
       </div>
     </LangContext.Provider>

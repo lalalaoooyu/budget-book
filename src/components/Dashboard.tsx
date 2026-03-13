@@ -31,21 +31,21 @@ export default function Dashboard({ entries }: Props) {
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
         {cards.map((card) => (
           <div
             key={card.label}
-            className={`bg-white rounded-2xl p-5 border-l-4 ${card.accent} shadow-sm hover:shadow-md transition-shadow`}
+            className={`bg-white rounded-xl md:rounded-2xl p-3 md:p-5 border-l-4 ${card.accent} shadow-sm hover:shadow-md transition-shadow`}
           >
-            <p className="text-xs font-medium text-anthro-muted tracking-wide uppercase">{card.label}</p>
-            <p className="text-2xl font-bold mt-2 text-anthro-dark">
+            <p className="text-[10px] md:text-xs font-medium text-anthro-muted tracking-wide uppercase">{card.label}</p>
+            <p className="text-base md:text-2xl font-bold mt-1 md:mt-2 text-anthro-dark">
               ¥{card.value.toLocaleString()}
             </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 bg-white rounded-2xl p-6 shadow-sm">
+      <div className="mt-5 md:mt-8 bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm">
         <h2 className="text-sm font-medium text-anthro-muted mb-4 tracking-wide uppercase">{t.dashboard.breakdown}</h2>
         <div className="space-y-3">
           {entries.filter(e => e.category === '費用' && e.amount > 0).map((entry) => {
