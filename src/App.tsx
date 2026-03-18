@@ -29,13 +29,30 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
     history: t.tabs.history,
   };
 
-  function exportData() {
+  async function exportData() {
     const data = { entries, subscriptions, monthlyRecords };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const filename = `kakeibo-backup-${new Date().toISOString().slice(0, 10)}.json`;
+
+    if ('showSaveFilePicker' in window) {
+      try {
+        const handle = await (window as unknown as { showSaveFilePicker: (opts: unknown) => Promise<FileSystemFileHandle> }).showSaveFilePicker({
+          suggestedName: filename,
+          types: [{ description: 'JSON', accept: { 'application/json': ['.json'] } }],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return;
+      } catch (err) {
+        if ((err as DOMException).name === 'AbortError') return;
+      }
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `kakeibo-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
   }

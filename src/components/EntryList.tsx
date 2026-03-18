@@ -19,6 +19,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
   const { t } = useLang();
   const [filter, setFilter] = useState<Category | 'all'>('all');
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
   const [editAmount, setEditAmount] = useState('');
   const [editNote, setEditNote] = useState('');
   const [showAdd, setShowAdd] = useState(false);
@@ -36,22 +37,43 @@ export default function EntryList({ entries, onUpdate }: Props) {
     '費用': t.categories.expenses,
   };
 
+  const summaryCategories = filter === 'all' ? categories : [filter];
+  const summaryData = summaryCategories.map((cat) => {
+    const items = entries.filter((e) => e.category === cat);
+    return { category: cat, count: items.length, total: items.reduce((s, e) => s + e.amount, 0) };
+  });
+
   function startEdit(entry: Entry) {
     setEditingId(entry.id);
+    setEditName(entry.name);
     setEditAmount(String(entry.amount));
     setEditNote(entry.note);
   }
 
   function saveEdit(id: string) {
     onUpdate(entries.map((e) =>
-      e.id === id ? { ...e, amount: Number(editAmount) || 0, note: editNote } : e
+      e.id === id ? { ...e, name: editName.trim() || e.name, amount: Number(editAmount) || 0, note: editNote } : e
     ));
     setEditingId(null);
+  }
+
+  function handleEditKeyDown(e: React.KeyboardEvent, id: string) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      saveEdit(id);
+    }
   }
 
   function deleteEntry(id: string) {
     if (!confirm(t.entries.confirmDelete)) return;
     onUpdate(entries.filter((e) => e.id !== id));
+  }
+
+  function handleAddKeyDown(e: React.KeyboardEvent) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addEntry();
+    }
   }
 
   function addEntry() {
@@ -98,6 +120,20 @@ export default function EntryList({ entries, onUpdate }: Props) {
         </button>
       </div>
 
+      <div className={`grid gap-3 mb-4 md:mb-5 ${summaryData.length === 1 ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-4'}`}>
+        {summaryData.map(({ category, count, total }) => (
+          <div key={category} className={`rounded-xl md:rounded-2xl shadow-sm p-3 md:p-4 bg-white border-l-4 ${
+            category === '資産' ? 'border-anthro-orange' :
+            category === '負債' ? 'border-red-400' :
+            category === '収益' ? 'border-emerald-400' : 'border-amber-400'
+          }`}>
+            <div className="text-xs text-anthro-muted mb-1">{categoryLabels[category]}</div>
+            <div className="text-lg md:text-xl font-bold text-anthro-dark">¥{total.toLocaleString()}</div>
+            <div className="text-xs text-anthro-muted">{count} {t.entries.summaryCount}</div>
+          </div>
+        ))}
+      </div>
+
       {showAdd && (
         <div className="bg-white rounded-xl md:rounded-2xl shadow-sm p-4 md:p-5 mb-4 md:mb-5 flex flex-wrap gap-3 md:gap-4 items-end">
           <div>
@@ -115,6 +151,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
             <input
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
+              onKeyDown={handleAddKeyDown}
               className="border border-anthro-sand rounded-lg px-3 py-2 text-sm w-32 focus:outline-anthro-orange"
               placeholder={t.entries.itemPlaceholder}
             />
@@ -125,6 +162,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
               type="number"
               value={newAmount}
               onChange={(e) => setNewAmount(e.target.value)}
+              onKeyDown={handleAddKeyDown}
               className="border border-anthro-sand rounded-lg px-3 py-2 text-sm w-28 focus:outline-anthro-orange"
               placeholder="0"
             />
@@ -134,6 +172,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
             <input
               value={newNote}
               onChange={(e) => setNewNote(e.target.value)}
+              onKeyDown={handleAddKeyDown}
               className="border border-anthro-sand rounded-lg px-3 py-2 text-sm w-32 focus:outline-anthro-orange"
               placeholder={t.entries.notePlaceholder}
             />
@@ -166,13 +205,25 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     {categoryLabels[entry.category]}
                   </span>
                 </td>
-                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-dark">{entry.name}</td>
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-dark">
+                  {editingId === entry.id ? (
+                    <input
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
+                      className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-full focus:outline-anthro-orange"
+                    />
+                  ) : (
+                    entry.name
+                  )}
+                </td>
                 <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-right text-anthro-dark">
                   {editingId === entry.id ? (
                     <input
                       type="number"
                       value={editAmount}
                       onChange={(e) => setEditAmount(e.target.value)}
+                      onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
                       className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-28 text-right focus:outline-anthro-orange"
                     />
                   ) : (
@@ -184,6 +235,7 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     <input
                       value={editNote}
                       onChange={(e) => setEditNote(e.target.value)}
+                      onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
                       className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-full focus:outline-anthro-orange"
                     />
                   ) : (

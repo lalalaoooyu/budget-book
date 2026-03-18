@@ -31,6 +31,8 @@ const translations = {
       itemPlaceholder: '項目名',
       notePlaceholder: '備考',
       confirmDelete: 'この項目を削除しますか？',
+      summaryCount: '件',
+      summaryTotal: '合計',
     },
     subscriptions: {
       title: 'サブスク管理',
@@ -111,6 +113,8 @@ const translations = {
       itemPlaceholder: 'Item name',
       notePlaceholder: 'Note',
       confirmDelete: 'Delete this item?',
+      summaryCount: 'items',
+      summaryTotal: 'Total',
     },
     subscriptions: {
       title: 'Subscriptions',
