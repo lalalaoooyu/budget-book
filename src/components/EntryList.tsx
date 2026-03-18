@@ -205,37 +205,41 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     {categoryLabels[entry.category]}
                   </span>
                 </td>
-                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-dark">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-dark cursor-pointer" onDoubleClick={() => startEdit(entry)}>
                   {editingId === entry.id ? (
                     <input
+                      autoFocus
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                       onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
+                      onBlur={() => saveEdit(entry.id)}
                       className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-full focus:outline-anthro-orange"
                     />
                   ) : (
                     entry.name
                   )}
                 </td>
-                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-right text-anthro-dark">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-right text-anthro-dark cursor-pointer" onDoubleClick={() => startEdit(entry)}>
                   {editingId === entry.id ? (
                     <input
                       type="number"
                       value={editAmount}
                       onChange={(e) => setEditAmount(e.target.value)}
                       onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
+                      onBlur={() => saveEdit(entry.id)}
                       className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-28 text-right focus:outline-anthro-orange"
                     />
                   ) : (
                     `¥${entry.amount.toLocaleString()}`
                   )}
                 </td>
-                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-muted">
+                <td className="px-3 md:px-5 py-2.5 md:py-3.5 text-anthro-muted cursor-pointer" onDoubleClick={() => startEdit(entry)}>
                   {editingId === entry.id ? (
                     <input
                       value={editNote}
                       onChange={(e) => setEditNote(e.target.value)}
                       onKeyDown={(e) => handleEditKeyDown(e, entry.id)}
+                      onBlur={() => saveEdit(entry.id)}
                       className="border border-anthro-sand rounded-lg px-2 py-1 text-sm w-full focus:outline-anthro-orange"
                     />
                   ) : (
@@ -249,9 +253,6 @@ export default function EntryList({ entries, onUpdate }: Props) {
                     </button>
                   ) : (
                     <div className="flex gap-3 justify-center">
-                      <button onClick={() => startEdit(entry)} className="text-anthro-brown text-xs hover:text-anthro-orange transition-colors">
-                        {t.entries.edit}
-                      </button>
                       <button onClick={() => deleteEntry(entry.id)} className="text-anthro-muted text-xs hover:text-red-500 transition-colors">
                         {t.entries.delete}
                       </button>
