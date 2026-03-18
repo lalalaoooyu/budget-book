@@ -84,11 +84,22 @@ export default function AssetChart({ records, onUpdate }: Props) {
     },
   };
 
+  function getNextMonth(): string {
+    if (records.length === 0) return currentYearMonth;
+    const last = records[records.length - 1].yearMonth;
+    const match = last.match(/(\d{4})\D+(\d{1,2})/);
+    if (!match) return currentYearMonth;
+    let year = Number(match[1]);
+    let month = Number(match[2]) + 1;
+    if (month > 12) { month = 1; year++; }
+    return `${year}年${month}月`;
+  }
+
   function addMonth() {
-    if (!newMonth.trim()) return;
-    if (records.some((r) => r.yearMonth === newMonth.trim())) return;
+    const monthToAdd = newMonth.trim() || getNextMonth();
+    if (records.some((r) => r.yearMonth === monthToAdd)) return;
     const newRecords = [...records, {
-      yearMonth: newMonth.trim(),
+      yearMonth: monthToAdd,
       assets: null,
       target: '',
       dcPension: null,
@@ -174,7 +185,7 @@ export default function AssetChart({ records, onUpdate }: Props) {
                   value={newMonth}
                   onChange={(e) => setNewMonth(e.target.value)}
                   className="border border-anthro-sand rounded-lg px-2 py-1.5 text-sm w-28 focus:outline-anthro-orange"
-                  placeholder="2026年4月"
+                  placeholder={getNextMonth()}
                 />
               </td>
               <td colSpan={2}></td>

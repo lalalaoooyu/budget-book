@@ -22,20 +22,24 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showGuide, setShowGuide] = useState(false);
 
-  // Auto-sync current month's assets from entries
+  // Auto-sync current month's net assets (資産 - 負債) from entries
   useEffect(() => {
     const now = new Date();
     const currentYearMonth = `${now.getFullYear()}年${now.getMonth() + 1}月`;
     const totalAssets = entries
       .filter((e) => e.category === '資産')
       .reduce((sum, e) => sum + e.amount, 0);
+    const totalLiabilities = entries
+      .filter((e) => e.category === '負債')
+      .reduce((sum, e) => sum + e.amount, 0);
+    const netAssets = totalAssets - totalLiabilities;
 
     setMonthlyRecords((prev) => {
       const existing = prev.find((r) => r.yearMonth === currentYearMonth);
       if (existing) {
-        if (existing.assets === totalAssets) return prev;
+        if (existing.assets === netAssets) return prev;
         return prev.map((r) =>
-          r.yearMonth === currentYearMonth ? { ...r, assets: totalAssets } : r
+          r.yearMonth === currentYearMonth ? { ...r, assets: netAssets } : r
         );
       }
       const parseYM = (s: string) => {
@@ -44,7 +48,7 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
       };
       return [...prev, {
         yearMonth: currentYearMonth,
-        assets: totalAssets,
+        assets: netAssets,
         target: '',
         dcPension: null,
         welfarePension: null,

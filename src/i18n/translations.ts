@@ -45,9 +45,9 @@ const translations = {
       confirmDelete: 'このサブスクを削除しますか？',
     },
     history: {
-      chartTitle: '資産推移',
+      chartTitle: '純資産推移',
       yearMonth: '年月',
-      assets: '資産',
+      assets: '純資産',
       feedback: 'フィードバック',
       confirmDelete: 'この記録を削除しますか？',
       autoSync: '自動同期',
@@ -128,9 +128,9 @@ const translations = {
       confirmDelete: 'Delete this subscription?',
     },
     history: {
-      chartTitle: 'Asset Trend',
+      chartTitle: 'Net Asset Trend',
       yearMonth: 'Month',
-      assets: 'Assets',
+      assets: 'Net Assets',
       feedback: 'Feedback',
       confirmDelete: 'Delete this record?',
       autoSync: 'Auto-sync',
