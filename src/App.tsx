@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { initialEntries, initialSubscriptions, initialMonthlyRecords } from './data/initialData';
 import { LangContext } from './i18n/useLang';
@@ -21,6 +21,38 @@ function AppInner({ langToggle }: { langToggle: React.ReactNode }) {
   const [monthlyRecords, setMonthlyRecords] = useLocalStorage('kakeibo-monthly', initialMonthlyRecords);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showGuide, setShowGuide] = useState(false);
+
+  // Auto-sync current month's assets from entries
+  useEffect(() => {
+    const now = new Date();
+    const currentYearMonth = `${now.getFullYear()}年${now.getMonth() + 1}月`;
+    const totalAssets = entries
+      .filter((e) => e.category === '資産')
+      .reduce((sum, e) => sum + e.amount, 0);
+
+    setMonthlyRecords((prev) => {
+      const existing = prev.find((r) => r.yearMonth === currentYearMonth);
+      if (existing) {
+        if (existing.assets === totalAssets) return prev;
+        return prev.map((r) =>
+          r.yearMonth === currentYearMonth ? { ...r, assets: totalAssets } : r
+        );
+      }
+      const parseYM = (s: string) => {
+        const m = s.match(/(\d{4})\D+(\d{1,2})/);
+        return m ? Number(m[1]) * 100 + Number(m[2]) : 0;
+      };
+      return [...prev, {
+        yearMonth: currentYearMonth,
+        assets: totalAssets,
+        target: '',
+        dcPension: null,
+        welfarePension: null,
+        nationalPension: null,
+        feedback: '',
+      }].sort((a, b) => parseYM(a.yearMonth) - parseYM(b.yearMonth));
+    });
+  }, [entries, setMonthlyRecords]);
 
   const tabLabels: Record<Tab, string> = {
     dashboard: t.tabs.dashboard,

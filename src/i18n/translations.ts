@@ -50,6 +50,7 @@ const translations = {
       assets: '資産',
       feedback: 'フィードバック',
       confirmDelete: 'この記録を削除しますか？',
+      autoSync: '自動同期',
     },
     categories: { assets: '資産', liabilities: '負債', income: '収益', expenses: '費用' },
     guide: {
@@ -132,6 +133,7 @@ const translations = {
       assets: 'Assets',
       feedback: 'Feedback',
       confirmDelete: 'Delete this record?',
+      autoSync: 'Auto-sync',
     },
     categories: { assets: 'Assets', liabilities: 'Liabilities', income: 'Income', expenses: 'Expenses' },
     guide: {

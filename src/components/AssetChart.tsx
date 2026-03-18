@@ -27,9 +27,15 @@ function parseYearMonth(s: string): number {
   return Number(match[1]) * 100 + Number(match[2]);
 }
 
+function getCurrentYearMonth(): string {
+  const now = new Date();
+  return `${now.getFullYear()}年${now.getMonth() + 1}月`;
+}
+
 export default function AssetChart({ records, onUpdate }: Props) {
   const { t } = useLang();
   const [newMonth, setNewMonth] = useState('');
+  const currentYearMonth = getCurrentYearMonth();
   const dataRecords = records.filter((r) => r.assets !== null);
 
   const chartData = {
@@ -128,15 +134,24 @@ export default function AssetChart({ records, onUpdate }: Props) {
           <tbody>
             {records.map((record, i) => (
               <tr key={record.yearMonth} className="border-t border-anthro-sand/50 hover:bg-anthro-cream/50 transition-colors">
-                <td className="px-4 py-3 font-medium text-anthro-dark">{record.yearMonth}</td>
+                <td className="px-4 py-3 font-medium text-anthro-dark">
+                  {record.yearMonth}
+                  {record.yearMonth === currentYearMonth && (
+                    <span className="ml-2 text-[10px] text-anthro-orange font-normal">{t.history.autoSync}</span>
+                  )}
+                </td>
                 <td className="px-4 py-3 text-right">
-                  <input
-                    type="number"
-                    value={record.assets ?? ''}
-                    onChange={(e) => updateRecord(i, 'assets', e.target.value)}
-                    className="border border-anthro-sand rounded-lg px-2 py-1.5 text-sm w-28 text-right focus:outline-anthro-orange"
-                    placeholder="-"
-                  />
+                  {record.yearMonth === currentYearMonth ? (
+                    <span className="text-sm text-anthro-dark font-medium">¥{(record.assets ?? 0).toLocaleString()}</span>
+                  ) : (
+                    <input
+                      type="number"
+                      value={record.assets ?? ''}
+                      onChange={(e) => updateRecord(i, 'assets', e.target.value)}
+                      className="border border-anthro-sand rounded-lg px-2 py-1.5 text-sm w-28 text-right focus:outline-anthro-orange"
+                      placeholder="-"
+                    />
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   <input
